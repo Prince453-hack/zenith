@@ -7,9 +7,9 @@ const Loading = () => {
       <Image
         src="/logo.svg"
         alt="Logo"
-        width={700}
-        height={700}
-        className="animate-pulse duration-700"
+        width={60}
+        height={60}
+        className="animate-spin duration-700"
       />
     </div>
   );
