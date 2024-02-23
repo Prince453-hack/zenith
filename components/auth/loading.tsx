@@ -9,7 +9,7 @@ const Loading = () => {
         alt="Logo"
         width={60}
         height={60}
-        className="animate-spin duration-700"
+        className="animate-spin"
       />
     </div>
   );
