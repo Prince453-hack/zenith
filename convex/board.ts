@@ -51,6 +51,18 @@ export const remove = mutation({
       throw new Error("Unauthorized");
     }
 
+    const userId = identity.subject;
+    const existingFavorites = await ctx.db
+      .query("userFavorites")
+      .withIndex("by_user_board", (q) =>
+        q.eq("userId", userId).eq("boardId", arg.id)
+      )
+      .unique();
+
+    if (existingFavorites) {
+      await ctx.db.delete(existingFavorites._id);
+    }
+
     await ctx.db.delete(arg.id);
   },
 });
