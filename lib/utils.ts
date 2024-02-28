@@ -26,10 +26,10 @@ export function pointerEventToCanvas(e: React.PointerEvent, camera: Camera) {
   };
 }
 
-export function ColorToCSS(color: Color) {
+export function colorToCss(color: Color) {
   return `#${color.r.toString(16).padStart(2, "0")}${color.g
     .toString(16)
-    .padStart(2, "0")}.${color.b.toString(16).padStart(2, "0")}`;
+    .padStart(2, "0")}${color.b.toString(16).padStart(2, "0")}`;
 }
 
 export function resizeBounds(bounds: XYWH, corner: Side, point: Point): XYWH {

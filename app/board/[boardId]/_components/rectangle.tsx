@@ -1,4 +1,4 @@
-import { ColorToCSS } from "@/lib/utils";
+import { colorToCss } from "@/lib/utils";
 import { RectangleLayer } from "@/types/canvas";
 
 interface Props {
@@ -28,7 +28,7 @@ export const Rectangle = ({
       width={width}
       height={height}
       strokeWidth={1}
-      fill={fill ? ColorToCSS(fill) : "#ccc"}
+      fill={fill ? colorToCss(fill) : "#ccc"}
       stroke={selectionColor || "transparent"}
     />
   );
