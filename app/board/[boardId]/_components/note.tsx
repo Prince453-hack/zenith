@@ -50,7 +50,7 @@ export const Note = ({ id, layer, onPointerDown, selectionColor }: Props) => {
         outline: selectionColor ? `1px solid ${selectionColor}` : "none",
         backgroundColor: fill ? colorToCss(fill) : "#000",
       }}
-      className="drop-shadow-xl shadow-md"
+      className="drop-shadow-xl shadow-md rounded-sm"
     >
       <ContentEditable
         html={value || "Text"}
