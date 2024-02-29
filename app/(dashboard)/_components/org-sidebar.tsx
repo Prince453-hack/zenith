@@ -78,7 +78,7 @@ const OrgSidebar = () => {
             }}
           >
             <Star className="h-4 w-4 mr-3" />
-            Favourite Board
+            Favorite Board
           </Link>
         </Button>
       </div>
