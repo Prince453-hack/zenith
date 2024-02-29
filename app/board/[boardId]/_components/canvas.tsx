@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { Info } from "./info";
 import { Participants } from "./participants";
 import { Toolbar } from "./toolbar";
@@ -38,6 +38,8 @@ import { LayerPreview } from "./layer-preview";
 import { SelectionBox } from "./selection-box";
 import { SelectionTools } from "./selection-tools";
 import { Path } from "./path";
+import { useDisableScroll } from "@/hooks/use-disable-scroll";
+import { useDeleteLayer } from "@/hooks/use-delete-layers";
 
 const MAX_LAYERS = 100;
 
@@ -48,6 +50,7 @@ interface Props {
 export const Canvas = ({ boardId }: Props) => {
   const layerIds = useStorage((root) => root.layerIds);
   const pencilDraft = useSelf((self) => self.presence.pencilDraft);
+  useDisableScroll();
   const history = useHistory();
   const canUndo = useCanUndo();
   const canRedo = useCanRedo();
@@ -372,6 +375,39 @@ export const Canvas = ({ boardId }: Props) => {
     },
     [setCanvasState, camera, history, canvasState.mode]
   );
+
+  const deleteLayers = useDeleteLayer();
+
+  useEffect(() => {
+    function onKeyDown(e: KeyboardEvent) {
+      switch (e.key) {
+        case "Delete":
+          deleteLayers();
+          break;
+        case "z":
+          if (e.ctrlKey || e.metaKey) {
+            if (e.shiftKey) {
+              history.redo();
+            } else {
+              history.undo();
+            }
+            break;
+          }
+          break;
+        case "y":
+          if (e.ctrlKey || e.metaKey) {
+            history.redo();
+            break;
+          }
+          break;
+      }
+    }
+
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [deleteLayers, history]);
 
   return (
     <main className="h-full w-full relative bg-neutral-100 touch-none">
